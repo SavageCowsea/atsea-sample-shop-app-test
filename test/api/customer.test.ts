@@ -1,7 +1,7 @@
-import get from "superagent";
-import put from "superagent";
+import { get, put, del, post } from "superagent";
+/* import put from "superagent";
 import del from "superagent";
-import ajax from "superagent";
+import ajax from "superagent"; */
 import StatusCodes from "http-status-codes";
 import * as chai from "chai";
 
@@ -11,8 +11,7 @@ describe("Customer tests", () => {
   let customerTestId;
   let customerName;
   it("Create customer", async () => {
-    const response = await ajax
-      .post("http://localhost:8080/api/customer/")
+    const response = await post("http://localhost:8080/api/customer/")
       .send({
         customerId: 1,
         name: "Sally Vallery",
@@ -102,16 +101,14 @@ describe("Customer tests", () => {
 
   it("Delete customer by Id", async () => {
     const id = customerTestId; // Deberiamos cambiar esto
-    const response = await ajax
-      .del("http://localhost:8080/api/customer/" + id) ///Por que no sirve del (?)
+    const response = await del("http://localhost:8080/api/customer/" + id) ///Por que no sirve del (?)
       .set("Content-type", "application/json")
       .set("Accept", "application/json");
     expect(response.status).to.equal(StatusCodes.NO_CONTENT);
   });
 
   it("Delete all customers in system", async () => {
-    const response = await ajax
-      .del(`http://localhost:8080/api/customer/`)
+    const response = await del(`http://localhost:8080/api/customer/`)
       .set("User-Agent", "agent")
       .set("Content-Type", "application/json");
     expect(response.status).to.equal(StatusCodes.NO_CONTENT);
